@@ -111,8 +111,10 @@ class LibraryViewController: UIViewController, DownloadWebViewDelegate {
     func loadYouTubeVideo(videoID: String) {
         print("Loading url: https://www.youtube.com/embed/\(videoID)")
 		self.showSpinner(onView: self.view, withTitle: "Loading...")
+        XCDYouTubeClient.setInnertubeApiKey("AIzaSyAnGLn1iIjegP5cZAKhW0092t9mPc6jlPQ")
         XCDYouTubeClient.default().getVideoWithIdentifier(videoID) { (video, error) in
             guard video != nil else {
+                print("=====This is the error")
 				print(error?.localizedDescription as Any)
 				self.removeSpinner()
 				let alert = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
@@ -121,7 +123,11 @@ class LibraryViewController: UIViewController, DownloadWebViewDelegate {
                 return
             }
 			self.removeSpinner()
-			self.LM.addSongToLibrary(songTitle: video!.title, songUrl: video!.streamURL!, songExtension: "mp4", thumbnailUrl: video!.thumbnailURLs![video!.thumbnailURLs!.count/2], songID: videoID, completion: {
+            var url: URL?
+            if video?.thumbnailURLs != nil && video?.thumbnailURLs?.count != 0 {
+                url = video!.thumbnailURLs![video!.thumbnailURLs!.count/2]
+            }
+			self.LM.addSongToLibrary(songTitle: video!.title, songUrl: video!.streamURL!, songExtension: "mp4", thumbnailUrl: url, songID: videoID, completion: {
 				self.libraryTableView.refreshTableView()
 				self.libraryTableView.tableView(self.libraryTableView, didSelectRowAt: IndexPath(row: 0, section: 0))
 			})

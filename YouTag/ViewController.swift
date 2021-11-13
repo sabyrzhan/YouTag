@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, FilterPickerViewDelegate, YYTTagViewDelegate {
+class ViewController: UIViewController, FilterPickerViewDelegate, YYTTagViewDelegate, PlaylistManagerDelegate {
 	
 	var tagsView: YYTFilterTagView!
 	var playlistManager = PlaylistManager()
@@ -121,6 +121,7 @@ class ViewController: UIViewController, FilterPickerViewDelegate, YYTTagViewDele
 		versionLabel.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -1).isActive = true
 		versionLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
 		
+        playlistManager.plmDelegate = self
 		playlistManager.nowPlayingView.backgroundColor = .clear
 		playlistManager.nowPlayingView.addBorder(side: .top, color: .lightGray, width: 1.0)
 		playlistManager.nowPlayingView.addBorder(side: .bottom, color: .lightGray, width: 1.0)
@@ -148,6 +149,14 @@ class ViewController: UIViewController, FilterPickerViewDelegate, YYTTagViewDele
 		filterPickerView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
 		filterPickerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
 	}
+    
+    func didPressedEditAction(url: URL) {
+        //Set the link to share.
+        let objectsToShare = [url] as [Any]
+        let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+        activityVC.excludedActivityTypes = [UIActivity.ActivityType.airDrop, UIActivity.ActivityType.addToReadingList]
+        self.present(activityVC, animated: true, completion: nil)
+    }
 	
 	override func viewWillAppear(_ animated: Bool) {
 		playlistManager.computePlaylist()

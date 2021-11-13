@@ -10,6 +10,7 @@ import UIKit
 
 protocol PlaylistLibraryViewDelegate: class {
 	func didSelectSong(songDict: Dictionary<String, Any>)
+    func didPressedEditAction(url: URL)
 }
 
 class PlaylistLibraryView: LibraryTableView {
@@ -66,6 +67,25 @@ class PlaylistLibraryView: LibraryTableView {
 		tableView.reloadData()
 		
 		PLDelegate?.didSelectSong(songDict: cell.songDict)
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let editAction = UITableViewRowAction(style: .normal, title: "Edit") { (rowAction, indexPath) in
+            let file = self.playlistArray[(self.playlistArray.count - 2 - indexPath.row) % self.playlistArray.count] as! Dictionary<String, Any>
+            let fileExt = file["fileExtension"]!
+            let fileId = file["id"]!
+            let fileUrl = LocalFilesManager.getLocalFileURL(withNameAndExtension: "\(fileId).\(fileExt)")
+            self.PLDelegate?.didPressedEditAction(url: fileUrl)
+        }
+        editAction.backgroundColor = .blue
+
+        let deleteAction = UITableViewRowAction(style: .normal, title: "Delete") { (rowAction, indexPath) in
+                //TODO: Delete the row at indexPath here
+        }
+        deleteAction.backgroundColor = .red
+
+        return [editAction,deleteAction]
     }
 	
 	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

@@ -52,7 +52,9 @@ class LibraryManager {
 		Thumbnail URL -> It will skip downloading a thumbnail image
 	*/
 	func addSongToLibrary(songTitle: String?, songUrl: URL, songExtension: String , thumbnailUrl: URL?, songID: String?, completion: (() -> Void)? = nil) {
-		let sID = songID == nil ? "dl_" + generateIDFromTimeStamp() : "yt_" + songID! + generateIDFromTimeStamp()
+        //print("===== Song title : \(songTitle)")
+//		let sID = songID == nil ? "dl_" + generateIDFromTimeStamp() : "yt_" + songID! + generateIDFromTimeStamp()
+        let sID = songTitle!
 		var newExtension: String
 		var errorStr: String?
 		

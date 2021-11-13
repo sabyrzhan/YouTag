@@ -21,11 +21,11 @@
       },
       {
         "package": "XCDYouTubeKit",
-        "repositoryURL": "https://github.com/0xced/XCDYouTubeKit",
+        "repositoryURL": "git@github.com:armendh/XCDYouTubeKit.git",
         "state": {
-          "branch": null,
-          "revision": "23f765941b36d6d28215ab81a37af1039d29138b",
-          "version": "2.15.2"
+          "branch": "master",
+          "revision": "651a6a51c695c5819eb51ba2f98d0b64094315b9",
+          "version": null
         }
       }
     ]

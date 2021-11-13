@@ -8,8 +8,12 @@
 
 import UIKit
 
+protocol PlaylistManagerDelegate {
+    func didPressedEditAction(url: URL)
+}
+
 class PlaylistManager: NSObject, PlaylistLibraryViewDelegate, NowPlayingViewDelegate {
-	
+    var plmDelegate: PlaylistManagerDelegate?
 	var nowPlayingView: NowPlayingView!
 	var playlistLibraryView: PlaylistLibraryView!
 	var audioPlayer: YYTAudioPlayer!
@@ -106,6 +110,10 @@ class PlaylistManager: NSObject, PlaylistLibraryViewDelegate, NowPlayingViewDele
 		refreshNowPlayingView()
 		nowPlayingView.pausePlayButtonAction(sender: nil)
 	}
+    
+    func didPressedEditAction(url: URL) {
+        self.plmDelegate?.didPressedEditAction(url: url)
+    }
 	
 	func shufflePlaylist() {
 		if playlistLibraryView.playlistArray.count <= 1 {
