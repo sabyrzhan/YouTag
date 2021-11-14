@@ -111,7 +111,7 @@ class LibraryViewController: UIViewController, DownloadWebViewDelegate {
     func loadYouTubeVideo(videoID: String) {
         print("Loading url: https://www.youtube.com/embed/\(videoID)")
 		self.showSpinner(onView: self.view, withTitle: "Loading...")
-        XCDYouTubeClient.setInnertubeApiKey("AIzaSyAnGLn1iIjegP5cZAKhW0092t9mPc6jlPQ")
+        XCDYouTubeClient.setInnertubeApiKey("AIzaXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
         XCDYouTubeClient.default().getVideoWithIdentifier(videoID) { (video, error) in
             guard video != nil else {
                 print("=====This is the error")
